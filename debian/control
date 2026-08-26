@@ -724,7 +724,7 @@ Description: Kicksecure systems, VMs, LXQt GUI packages
  .
  Provides packages for LXQt graphical desktop installations.
 
-Package: kicksecure-debug
+Package: kicksecure-ci-tiny-do-not-use
 Architecture: all
 Pre-Depends: legacy-dist
 Depends: kicksecure-base-files,
@@ -748,11 +748,13 @@ Depends: kicksecure-base-files,
  repository-dist,
  ${misc:Depends}
 Description: Kicksecure minimal boot-test / debug image
+ DANGEROUS, DO NOT USE.
+ .
  A deliberately minimal package set for fast boot-test iteration: the boot
  chain (GRUB SMBIOS cmdline reader, RAM wipe).
  .
- NOT for production use. Intended only to speed
- up boot/grub/systemcheck iteration.
+ Not for production use. Intended only to speed
+ up boot/grub/systemcheck iteration for CI builds.
 
 Package: kicksecure-packages-dependencies-pre
 Architecture: all
