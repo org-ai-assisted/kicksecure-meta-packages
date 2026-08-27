@@ -8,6 +8,7 @@ Vcs-Browser: https://github.com/Kicksecure/kicksecure-meta-packages
 Vcs-Git: https://github.com/Kicksecure/kicksecure-meta-packages.git
 Standards-Version: 4.7.2
 Rules-Requires-Root: no
+X-Private-Trivially-Cross-Buildable: yes
 
 Package: dist-general-cli
 Architecture: all
@@ -363,9 +364,9 @@ Description: All systems, physical hardware, command-line packages
  Provides packages for basic command-line-only installations.
 
 Package: dist-baremetal-gui-all
-Architecture: all
+Architecture: any
 Pre-Depends: legacy-dist
-Depends: virtualbox-guest-additions-iso | virtualbox-7.2 | virtualbox-7.3 | virtualbox-7.4 | virtualbox-8.0 | virtualbox-8.1 | virtualbox-8.2 | virtualbox-8.3 | virtualbox-8.4,
+Depends: virtualbox-guest-additions-iso [amd64 arm64] | virtualbox-7.2 [amd64] | virtualbox-7.3 [amd64] | virtualbox-7.4 [amd64] | virtualbox-8.0 [amd64] | virtualbox-8.1 [amd64] | virtualbox-8.2 [amd64] | virtualbox-8.3 [amd64] | virtualbox-8.4 [amd64],
  ${misc:Depends}
 Breaks: virtualbox-guest-x11,
  virtualbox-guest-utils
@@ -403,9 +404,9 @@ Description: All systems, VMs, command-line packages
  Provides packages for basic command-line-only installations.
 
 Package: dist-vm-gui-all
-Architecture: all
+Architecture: any
 Pre-Depends: legacy-dist
-Depends: virtualbox-guest-additions-iso | virtualbox-7.2 | virtualbox-7.3 | virtualbox-7.4 | virtualbox-8.0 | virtualbox-8.1 | virtualbox-8.2 | virtualbox-8.3 | virtualbox-8.4,
+Depends: virtualbox-guest-additions-iso [amd64 arm64] | virtualbox-7.2 [amd64] | virtualbox-7.3 [amd64] | virtualbox-7.4 [amd64] | virtualbox-8.0 [amd64] | virtualbox-8.1 [amd64] | virtualbox-8.2 [amd64] | virtualbox-8.3 [amd64] | virtualbox-8.4 [amd64],
  ${misc:Depends}
 Breaks: virtualbox-guest-x11,
  virtualbox-guest-utils
@@ -747,11 +748,13 @@ Depends: kicksecure-base-files,
  repository-dist,
  ${misc:Depends}
 Description: Kicksecure minimal boot-test / debug image
+ DANGEROUS, DO NOT USE.
+ .
  A deliberately minimal package set for fast boot-test iteration: the boot
  chain (GRUB SMBIOS cmdline reader, RAM wipe).
  .
- NOT for production use. Intended only to speed
- up boot/grub/systemcheck iteration.
+ Not for production use. Intended only to speed
+ up boot/grub/systemcheck iteration for CI builds.
 
 Package: kicksecure-packages-dependencies-pre
 Architecture: all
