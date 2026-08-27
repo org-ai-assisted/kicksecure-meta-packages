@@ -8,6 +8,7 @@ Vcs-Browser: https://github.com/Kicksecure/kicksecure-meta-packages
 Vcs-Git: https://github.com/Kicksecure/kicksecure-meta-packages.git
 Standards-Version: 4.7.2
 Rules-Requires-Root: no
+X-Private-Trivially-Cross-Buildable: yes
 
 Package: dist-general-cli
 Architecture: all
@@ -362,6 +363,22 @@ Description: All systems, physical hardware, command-line packages
  .
  Provides packages for basic command-line-only installations.
 
+Package: dist-baremetal-gui-all
+Architecture: any
+Pre-Depends: legacy-dist
+Depends: virtualbox-guest-additions-iso [amd64 arm64] | virtualbox-7.2 [amd64] | virtualbox-7.3 [amd64] | virtualbox-7.4 [amd64] | virtualbox-8.0 [amd64] | virtualbox-8.1 [amd64] | virtualbox-8.2 [amd64] | virtualbox-8.3 [amd64] | virtualbox-8.4 [amd64],
+ ${misc:Depends}
+Breaks: virtualbox-guest-x11,
+ virtualbox-guest-utils
+Replaces: virtualbox-guest-x11,
+ virtualbox-guest-utils
+Description: All systems, physical hardware, GUI packages
+ For all hardened systems.
+ .
+ For physical hardware.
+ .
+ Provides packages for all graphical desktop installations.
+
 Package: dist-baremetal-gui-lxqt
 Architecture: all
 Pre-Depends: legacy-dist
@@ -385,6 +402,22 @@ Description: All systems, VMs, command-line packages
  For non-Qubes virtual machines.
  .
  Provides packages for basic command-line-only installations.
+
+Package: dist-vm-gui-all
+Architecture: any
+Pre-Depends: legacy-dist
+Depends: virtualbox-guest-additions-iso [amd64 arm64] | virtualbox-7.2 [amd64] | virtualbox-7.3 [amd64] | virtualbox-7.4 [amd64] | virtualbox-8.0 [amd64] | virtualbox-8.1 [amd64] | virtualbox-8.2 [amd64] | virtualbox-8.3 [amd64] | virtualbox-8.4 [amd64],
+ ${misc:Depends}
+Breaks: virtualbox-guest-x11,
+ virtualbox-guest-utils
+Replaces: virtualbox-guest-x11,
+ virtualbox-guest-utils
+Description: All systems, VMs, GUI packages
+ For all hardened systems.
+ .
+ For non-Qubes virtual machines.
+ .
+ Provides packages for all graphical desktop installations.
 
 Package: kicksecure-general-cli
 Architecture: all
@@ -605,6 +638,7 @@ Depends: kicksecure-baremetal-cli,
  kicksecure-general-gui-all,
  kicksecure-general-cli,
  dist-baremetal-gui-lxqt,
+ dist-baremetal-gui-all,
  dist-baremetal-cli,
  dist-nonqubes-gui-lxqt,
  dist-nonqubes-gui-all,
@@ -670,6 +704,7 @@ Depends: kicksecure-vm-cli,
  kicksecure-general-gui-lxqt,
  kicksecure-general-gui-all,
  kicksecure-general-cli,
+ dist-vm-gui-all,
  dist-vm-cli,
  dist-nonqubes-gui-lxqt,
  dist-nonqubes-gui-all,
@@ -688,6 +723,36 @@ Description: Kicksecure systems, VMs, LXQt GUI packages
  For non-Qubes virtual machines.
  .
  Provides packages for LXQt graphical desktop installations.
+
+Package: kicksecure-debug
+Architecture: all
+Pre-Depends: legacy-dist
+Depends: kicksecure-base-files,
+ dist-base-files,
+ initializer-dist,
+ apparmor,
+ apparmor-profile-dist,
+ vm-config-dist,
+ security-misc-server,
+ tirdad-dkms,
+ rads,
+ ram-wipe,
+ usability-misc,
+ systemcheck,
+ user-sysmaint-split,
+ grub-live-dracut,
+ bootclockrandomization,
+ sdwdate,
+ sudo,
+ libpam-tmpdir,
+ repository-dist,
+ ${misc:Depends}
+Description: Kicksecure minimal boot-test / debug image
+ A deliberately minimal package set for fast boot-test iteration: the boot
+ chain (GRUB SMBIOS cmdline reader, RAM wipe).
+ .
+ NOT for production use. Intended only to speed
+ up boot/grub/systemcheck iteration.
 
 Package: kicksecure-packages-dependencies-pre
 Architecture: all
