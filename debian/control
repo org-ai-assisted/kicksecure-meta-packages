@@ -723,7 +723,7 @@ Description: Kicksecure systems, VMs, LXQt GUI packages
  .
  Provides packages for LXQt graphical desktop installations.
 
-Package: kicksecure-debug
+Package: kicksecure-ci-tiny-do-not-use
 Architecture: all
 Pre-Depends: legacy-dist
 Depends: kicksecure-base-files,
