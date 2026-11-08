@@ -401,9 +401,14 @@ Description: All systems, physical hardware, LXQt GUI packages
  Provides packages for LXQt graphical desktop installations.
 
 Package: dist-vm-cli
-Architecture: all
+Architecture: any
 Pre-Depends: legacy-dist
-Depends: ${misc:Depends}
+Depends: virtualbox-guest-additions-iso [amd64 arm64] | virtualbox-7.2 [amd64] | virtualbox-7.3 [amd64] | virtualbox-7.4 [amd64] | virtualbox-8.0 [amd64] | virtualbox-8.1 [amd64] | virtualbox-8.2 [amd64] | virtualbox-8.3 [amd64] | virtualbox-8.4 [amd64],
+ ${misc:Depends}
+Breaks: virtualbox-guest-x11,
+ virtualbox-guest-utils
+Replaces: virtualbox-guest-x11,
+ virtualbox-guest-utils
 Description: All systems, VMs, command-line packages
  For all hardened systems.
  .
