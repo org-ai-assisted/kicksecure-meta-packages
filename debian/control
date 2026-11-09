@@ -1164,3 +1164,22 @@ Description: dummy package virtualbox-guest-x11
  .
  This package cannot provide a real implementation of that package. It is only
  a dummy to satisfy the dependency.
+
+Package: virtualbox-host
+Architecture: amd64
+Depends: virtualbox-7.2 [amd64] | virtualbox-7.3 [amd64] | virtualbox-7.4 [amd64] | virtualbox-8.0 [amd64] | virtualbox-8.1 [amd64] | virtualbox-8.2 [amd64] | virtualbox-8.3 [amd64] | virtualbox-8.4 [amd64],
+ gcc,
+ make,
+ binutils,
+ linux-headers-amd64,
+ udev,
+ ${misc:Depends}
+Description: Oracle VirtualBox host plus kernel-module build toolchain
+ Pulls Oracle VirtualBox (host) together with the kernel-module build toolchain
+ it only Recommends -- gcc, make, binutils and the kernel headers meta -- which
+ Kicksecure drops via --no-install-recommends. Without the full toolchain the
+ vboxdrv/vboxnetflt/vboxnetadp modules are not rebuilt after a kernel update, so
+ VMs fail to start until a manual rebuild. Installing this package keeps the
+ host self-healing across kernel upgrades.
+ .
+ Opt-in: no Kicksecure variant depends on this package; install it explicitly.
