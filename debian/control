@@ -18,6 +18,7 @@ Depends: apparmor-profile-dist,
  apt-utils,
  bootclockrandomization,
  ca-certificates,
+ debsbom,
  dialog,
  dist-base-files,
  dummy-dependency-mta,
@@ -27,6 +28,8 @@ Depends: apparmor-profile-dist,
  locales,
  menu,
  nmap,
+ python3-cyclonedx-lib,
+ python3-networkx,
  repository-dist,
  sdwdate,
  security-misc-shared,
@@ -34,6 +37,7 @@ Depends: apparmor-profile-dist,
  sudo,
  timesanitycheck,
  usrmerge,
+ uuid-runtime,
  apparmor-profiles-kicksecure,
  apparmor-utils,
  bash-completion,
@@ -346,6 +350,7 @@ Depends: swayidle,
  grim,
  xdg-desktop-portal-wlr,
  kanshi,
+ wlrctl,
  smart-notifier,
  ${misc:Depends}
 Description: All systems, not Qubes VMs, LXQt GUI packages
@@ -400,9 +405,14 @@ Description: All systems, physical hardware, LXQt GUI packages
  Provides packages for LXQt graphical desktop installations.
 
 Package: dist-vm-cli
-Architecture: all
+Architecture: any
 Pre-Depends: legacy-dist
-Depends: ${misc:Depends}
+Depends: virtualbox-guest-additions-iso [amd64 arm64] | virtualbox-7.2 [amd64] | virtualbox-7.3 [amd64] | virtualbox-7.4 [amd64] | virtualbox-8.0 [amd64] | virtualbox-8.1 [amd64] | virtualbox-8.2 [amd64] | virtualbox-8.3 [amd64] | virtualbox-8.4 [amd64],
+ ${misc:Depends}
+Breaks: virtualbox-guest-x11,
+ virtualbox-guest-utils
+Replaces: virtualbox-guest-x11,
+ virtualbox-guest-utils
 Description: All systems, VMs, command-line packages
  For all hardened systems.
  .
@@ -1158,3 +1168,22 @@ Description: dummy package virtualbox-guest-x11
  .
  This package cannot provide a real implementation of that package. It is only
  a dummy to satisfy the dependency.
+
+Package: virtualbox-host
+Architecture: amd64
+Depends: virtualbox-7.2 [amd64] | virtualbox-7.3 [amd64] | virtualbox-7.4 [amd64] | virtualbox-8.0 [amd64] | virtualbox-8.1 [amd64] | virtualbox-8.2 [amd64] | virtualbox-8.3 [amd64] | virtualbox-8.4 [amd64],
+ gcc,
+ make,
+ binutils,
+ linux-headers-amd64,
+ udev,
+ ${misc:Depends}
+Description: Oracle VirtualBox host plus kernel-module build toolchain
+ Pulls Oracle VirtualBox (host) together with the kernel-module build toolchain
+ it only Recommends -- gcc, make, binutils and the kernel headers meta -- which
+ Kicksecure drops via --no-install-recommends. Without the full toolchain the
+ vboxdrv/vboxnetflt/vboxnetadp modules are not rebuilt after a kernel update, so
+ VMs fail to start until a manual rebuild. Installing this package keeps the
+ host self-healing across kernel upgrades.
+ .
+ Opt-in: no Kicksecure variant depends on this package; install it explicitly.
