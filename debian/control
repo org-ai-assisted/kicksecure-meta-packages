@@ -421,15 +421,10 @@ Description: All systems, VMs, command-line packages
  Provides packages for basic command-line-only installations.
 
 Package: dist-vm-gui-all
-Architecture: any
+Architecture: all
 Pre-Depends: legacy-dist
-Depends: virtualbox-guest-additions-iso [amd64 arm64] | virtualbox-7.2 [amd64] | virtualbox-7.3 [amd64] | virtualbox-7.4 [amd64] | virtualbox-8.0 [amd64] | virtualbox-8.1 [amd64] | virtualbox-8.2 [amd64] | virtualbox-8.3 [amd64] | virtualbox-8.4 [amd64],
- spice-vdagent,
+Depends: spice-vdagent,
  ${misc:Depends}
-Breaks: virtualbox-guest-x11,
- virtualbox-guest-utils
-Replaces: virtualbox-guest-x11,
- virtualbox-guest-utils
 Description: All systems, VMs, GUI packages
  For all hardened systems.
  .
@@ -1178,12 +1173,6 @@ Depends: virtualbox-7.2 [amd64] | virtualbox-7.3 [amd64] | virtualbox-7.4 [amd64
  linux-headers-amd64,
  udev,
  ${misc:Depends}
-Description: Oracle VirtualBox host plus kernel-module build toolchain
- Pulls Oracle VirtualBox (host) together with the kernel-module build toolchain
- it only Recommends -- gcc, make, binutils and the kernel headers meta -- which
- Kicksecure drops via --no-install-recommends. Without the full toolchain the
- vboxdrv/vboxnetflt/vboxnetadp modules are not rebuilt after a kernel update, so
- VMs fail to start until a manual rebuild. Installing this package keeps the
- host self-healing across kernel upgrades.
- .
- Opt-in: no Kicksecure variant depends on this package; install it explicitly.
+Description: Oracle VirtualBox plus kernel-module build toolchain
+ Not for production use. Used by Kicksecure developers as part of testing
+ infrastructure. Do not install.
